@@ -34,18 +34,18 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsbAssistAndroidProject = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbSave = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbGenerateCode = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tslAssistingAndroidProject = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitMain = new System.Windows.Forms.SplitContainer();
             this.tvAndroidProject = new System.Windows.Forms.TreeView();
             this.cmtTreeView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiCreateSocketEngine = new System.Windows.Forms.ToolStripMenuItem();
             this.fbdAndroidProject = new System.Windows.Forms.FolderBrowserDialog();
-            this.tslAssistingAndroidProject = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tsbAssistAndroidProject = new System.Windows.Forms.ToolStripButton();
-            this.tsbSave = new System.Windows.Forms.ToolStripButton();
-            this.tsbGenerateCode = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -61,7 +61,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(958, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(608, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -83,20 +83,65 @@
             this.tsbGenerateCode});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(958, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(608, 31);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsbAssistAndroidProject
+            // 
+            this.tsbAssistAndroidProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAssistAndroidProject.Image = global::AndroidCodeHero.Properties.Resources.assistandroidproject;
+            this.tsbAssistAndroidProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAssistAndroidProject.Name = "tsbAssistAndroidProject";
+            this.tsbAssistAndroidProject.Size = new System.Drawing.Size(28, 28);
+            this.tsbAssistAndroidProject.Text = "Assist Android Project";
+            this.tsbAssistAndroidProject.Click += new System.EventHandler(this.tsbAssistAndroidProject_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsbSave
+            // 
+            this.tsbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbSave.Image = global::AndroidCodeHero.Properties.Resources.Save;
+            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSave.Name = "tsbSave";
+            this.tsbSave.Size = new System.Drawing.Size(28, 28);
+            this.tsbSave.Text = "Save";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // tsbGenerateCode
+            // 
+            this.tsbGenerateCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbGenerateCode.Image = global::AndroidCodeHero.Properties.Resources.cog;
+            this.tsbGenerateCode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbGenerateCode.Name = "tsbGenerateCode";
+            this.tsbGenerateCode.Size = new System.Drawing.Size(28, 28);
+            this.tsbGenerateCode.Text = "Generate Code";
             // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslAssistingAndroidProject});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 437);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(958, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(608, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tslAssistingAndroidProject
+            // 
+            this.tslAssistingAndroidProject.Image = global::AndroidCodeHero.Properties.Resources.assistandroidproject;
+            this.tslAssistingAndroidProject.Name = "tslAssistingAndroidProject";
+            this.tslAssistingAndroidProject.Size = new System.Drawing.Size(177, 17);
+            this.tslAssistingAndroidProject.Text = "Assisting Android Project : ....";
             // 
             // splitMain
             // 
@@ -107,8 +152,8 @@
             // splitMain.Panel1
             // 
             this.splitMain.Panel1.Controls.Add(this.tvAndroidProject);
-            this.splitMain.Size = new System.Drawing.Size(958, 449);
-            this.splitMain.SplitterDistance = 202;
+            this.splitMain.Size = new System.Drawing.Size(608, 382);
+            this.splitMain.SplitterDistance = 182;
             this.splitMain.TabIndex = 3;
             // 
             // tvAndroidProject
@@ -123,7 +168,7 @@
             treeNode1});
             this.tvAndroidProject.ShowLines = false;
             this.tvAndroidProject.ShowPlusMinus = false;
-            this.tvAndroidProject.Size = new System.Drawing.Size(202, 449);
+            this.tvAndroidProject.Size = new System.Drawing.Size(182, 382);
             this.tvAndroidProject.TabIndex = 0;
             // 
             // cmtTreeView
@@ -143,62 +188,18 @@
             // 
             this.fbdAndroidProject.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
-            // tslAssistingAndroidProject
-            // 
-            this.tslAssistingAndroidProject.Image = global::AndroidCodeHero.Properties.Resources.assistandroidproject;
-            this.tslAssistingAndroidProject.Name = "tslAssistingAndroidProject";
-            this.tslAssistingAndroidProject.Size = new System.Drawing.Size(177, 16);
-            this.tslAssistingAndroidProject.Text = "Assisting Android Project : ....";
-            // 
-            // tsbAssistAndroidProject
-            // 
-            this.tsbAssistAndroidProject.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbAssistAndroidProject.Image = global::AndroidCodeHero.Properties.Resources.assistandroidproject;
-            this.tsbAssistAndroidProject.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbAssistAndroidProject.Name = "tsbAssistAndroidProject";
-            this.tsbAssistAndroidProject.Size = new System.Drawing.Size(28, 28);
-            this.tsbAssistAndroidProject.Text = "Assist Android Project";
-            this.tsbAssistAndroidProject.Click += new System.EventHandler(this.tsbAssistAndroidProject_Click);
-            // 
-            // tsbSave
-            // 
-            this.tsbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbSave.Image = global::AndroidCodeHero.Properties.Resources.Save;
-            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbSave.Name = "tsbSave";
-            this.tsbSave.Size = new System.Drawing.Size(28, 28);
-            this.tsbSave.Text = "Save";
-            // 
-            // tsbGenerateCode
-            // 
-            this.tsbGenerateCode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsbGenerateCode.Image = global::AndroidCodeHero.Properties.Resources.cog;
-            this.tsbGenerateCode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsbGenerateCode.Name = "tsbGenerateCode";
-            this.tsbGenerateCode.Size = new System.Drawing.Size(28, 28);
-            this.tsbGenerateCode.Text = "Generate Code";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(958, 526);
+            this.ClientSize = new System.Drawing.Size(608, 459);
             this.Controls.Add(this.splitMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(624, 497);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Android Code Hero";

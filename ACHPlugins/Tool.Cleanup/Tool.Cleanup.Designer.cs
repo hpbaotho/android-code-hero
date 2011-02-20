@@ -28,30 +28,87 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnScanAndroidProject = new System.Windows.Forms.Button();
+            this.tabcScanResult = new System.Windows.Forms.TabControl();
+            this.tabpUnusedResources = new System.Windows.Forms.TabPage();
+            this.tabpUsedResources = new System.Windows.Forms.TabPage();
+            this.tabpAllResources = new System.Windows.Forms.TabPage();
+            this.tabcScanResult.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnScanAndroidProject
             // 
-            this.button1.Location = new System.Drawing.Point(44, 46);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 52);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnScanAndroidProject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnScanAndroidProject.Location = new System.Drawing.Point(3, 3);
+            this.btnScanAndroidProject.Name = "btnScanAndroidProject";
+            this.btnScanAndroidProject.Size = new System.Drawing.Size(537, 32);
+            this.btnScanAndroidProject.TabIndex = 0;
+            this.btnScanAndroidProject.Text = "Scan Android Project";
+            this.btnScanAndroidProject.UseVisualStyleBackColor = true;
+            // 
+            // tabcScanResult
+            // 
+            this.tabcScanResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabcScanResult.Controls.Add(this.tabpUnusedResources);
+            this.tabcScanResult.Controls.Add(this.tabpUsedResources);
+            this.tabcScanResult.Controls.Add(this.tabpAllResources);
+            this.tabcScanResult.Location = new System.Drawing.Point(3, 41);
+            this.tabcScanResult.Name = "tabcScanResult";
+            this.tabcScanResult.SelectedIndex = 0;
+            this.tabcScanResult.Size = new System.Drawing.Size(541, 448);
+            this.tabcScanResult.TabIndex = 1;
+            // 
+            // tabpUnusedResources
+            // 
+            this.tabpUnusedResources.Location = new System.Drawing.Point(4, 22);
+            this.tabpUnusedResources.Name = "tabpUnusedResources";
+            this.tabpUnusedResources.Padding = new System.Windows.Forms.Padding(3);
+            this.tabpUnusedResources.Size = new System.Drawing.Size(533, 422);
+            this.tabpUnusedResources.TabIndex = 0;
+            this.tabpUnusedResources.Text = "Unused Resources";
+            this.tabpUnusedResources.UseVisualStyleBackColor = true;
+            // 
+            // tabpUsedResources
+            // 
+            this.tabpUsedResources.Location = new System.Drawing.Point(4, 22);
+            this.tabpUsedResources.Name = "tabpUsedResources";
+            this.tabpUsedResources.Padding = new System.Windows.Forms.Padding(3);
+            this.tabpUsedResources.Size = new System.Drawing.Size(440, 246);
+            this.tabpUsedResources.TabIndex = 1;
+            this.tabpUsedResources.Text = "Used Resources";
+            this.tabpUsedResources.UseVisualStyleBackColor = true;
+            // 
+            // tabpAllResources
+            // 
+            this.tabpAllResources.Location = new System.Drawing.Point(4, 22);
+            this.tabpAllResources.Name = "tabpAllResources";
+            this.tabpAllResources.Size = new System.Drawing.Size(440, 246);
+            this.tabpAllResources.TabIndex = 2;
+            this.tabpAllResources.Text = "All Resources";
+            this.tabpAllResources.UseVisualStyleBackColor = true;
             // 
             // Tool_Cleanup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tabcScanResult);
+            this.Controls.Add(this.btnScanAndroidProject);
             this.Name = "Tool_Cleanup";
+            this.Size = new System.Drawing.Size(546, 492);
+            this.tabcScanResult.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnScanAndroidProject;
+        private System.Windows.Forms.TabControl tabcScanResult;
+        private System.Windows.Forms.TabPage tabpUnusedResources;
+        private System.Windows.Forms.TabPage tabpUsedResources;
+        private System.Windows.Forms.TabPage tabpAllResources;
     }
 }
