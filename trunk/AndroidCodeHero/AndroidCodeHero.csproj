@@ -70,7 +70,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="achtemplate.zip" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
