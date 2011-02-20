@@ -52,7 +52,7 @@ namespace AndroidCodeHero
 
             MethodInfo miAnalyzer = ACHCodeGenerator.GetType().GetMethod("AnalyzeFiles");
 
-            miAnalyzer.Invoke(ACHCodeGenerator, new object[] { CodeFiles, TempDir });
+            miAnalyzer.Invoke(ACHCodeGenerator, new object[] { GetCoreFolder(), CodeFiles, TempDir });
 
             //ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
 
