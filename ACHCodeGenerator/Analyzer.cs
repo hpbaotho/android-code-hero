@@ -10,17 +10,6 @@ namespace ACHCodeGenerator
     public class Analyzer
     {
 
-        public static string GetTempDirectory() {
-        string path;
-        do
-        {
-            path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-        }
-        while (Directory.Exists(path));
-        Directory.CreateDirectory(path); 
-        return path; 
-        }
-
         static AnalyzerProgressBar apb = null;
 
         internal class AFHolder

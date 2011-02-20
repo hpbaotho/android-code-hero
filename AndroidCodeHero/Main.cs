@@ -16,14 +16,45 @@ namespace AndroidCodeHero
     public partial class Main : Form
     {
 
+        public static string GetTempDirectory()
+        {
+            string path;
+            do
+            {
+                path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            }
+            while (Directory.Exists(path));
+            Directory.CreateDirectory(path);
+            return path;
+        }
+
+        private object ACHCodeGenerator = null;
 
         public string AnalyzeProjectSourceCode()
         {
 
+            if (ACHCodeGenerator == null)
+            {
+                try
+                {
+                    Assembly asmACG = LoadAssemblyPluginToMemory(GetCoreFolder() + "\\ACHCodeGenerator.dll");
+                    ACHCodeGenerator = Activator.CreateInstance(asmACG.GetType("ACHCodeGenerator.Analyzer"));
+                }
+                catch (System.Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.Message);
+                }
+            }
+
             // Analyze Java Source Code
-            string TempDir = ACHCodeGenerator.Analyzer.GetTempDirectory();
+            string TempDir = GetTempDirectory();
             string[] CodeFiles = System.IO.Directory.GetFiles(Properties.Settings.Default.LastUsedProjectFolder, "*.java", SearchOption.AllDirectories);
-            ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
+
+            MethodInfo miAnalyzer = ACHCodeGenerator.GetType().GetMethod("AnalyzeFiles");
+
+            miAnalyzer.Invoke(ACHCodeGenerator, new object[] { CodeFiles, TempDir });
+
+            //ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
 
             return TempDir;
         }
@@ -45,9 +76,6 @@ namespace AndroidCodeHero
             }
             catch (Exception ex) { UControl = null; }
             return UControl;
-
-
-
         }
 
 
@@ -65,6 +93,11 @@ namespace AndroidCodeHero
         public string GetPluginFolder()
         {
             return System.Configuration.ConfigurationManager.AppSettings["PluginFolder"].ToString();
+        }
+
+        public string GetCoreFolder()
+        {
+            return System.Configuration.ConfigurationManager.AppSettings["CoreFolder"].ToString();
         }
 
         public class PluginInfo

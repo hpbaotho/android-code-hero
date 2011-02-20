@@ -116,12 +116,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ACHCodeGenerator\ACHCodeGenerator.csproj">
-      <Project>{CD6B0AE7-100D-4385-B0C5-882AD9378EDD}</Project>
-      <Name>ACHCodeGenerator</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Core\" />
     <Folder Include="Plugins\" />
   </ItemGroup>
