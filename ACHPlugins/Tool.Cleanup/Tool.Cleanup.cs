@@ -125,6 +125,7 @@ namespace ACHPlugin
 
             string sResultFolder = (string)oResult;
 
+            CodeAnalyzer.ParseResourceFile(sResultFolder + "\\R.jsp");
 
 
 
