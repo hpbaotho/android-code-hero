@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ACHPlugin</RootNamespace>
-    <AssemblyName>ACHPlugin</AssemblyName>
+    <AssemblyName>ACHP.Network.Socket</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
