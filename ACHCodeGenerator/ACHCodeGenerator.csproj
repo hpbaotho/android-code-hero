@@ -48,7 +48,6 @@
     <Compile Include="AnalyzerProgressBar.Designer.cs">
       <DependentUpon>AnalyzerProgressBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

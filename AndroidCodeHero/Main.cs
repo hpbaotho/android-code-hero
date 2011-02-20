@@ -433,11 +433,10 @@ namespace AndroidCodeHero
 
                 Properties.Settings.Default.Save();
 
-                string TempDir = ACHCodeGenerator.Analyzer.GetTempDirectory();
-
-                string[] CodeFiles = System.IO.Directory.GetFiles(FolderName, "*.java", SearchOption.AllDirectories);
-
-                ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
+                // Analyze Java Source Code
+                //string TempDir = ACHCodeGenerator.Analyzer.GetTempDirectory();
+                //string[] CodeFiles = System.IO.Directory.GetFiles(FolderName, "*.java", SearchOption.AllDirectories);
+                //ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
 
                 return true;
 
