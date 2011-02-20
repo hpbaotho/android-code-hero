@@ -47,7 +47,7 @@
             this.Controls.Add(this.pbarProgress);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AnalyzerProgressBar";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Analyzing Source Code";
             this.TopMost = true;
             this.ResumeLayout(false);

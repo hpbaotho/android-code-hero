@@ -16,6 +16,18 @@ namespace AndroidCodeHero
     public partial class Main : Form
     {
 
+
+        public string AnalyzeProjectSourceCode()
+        {
+
+            // Analyze Java Source Code
+            string TempDir = ACHCodeGenerator.Analyzer.GetTempDirectory();
+            string[] CodeFiles = System.IO.Directory.GetFiles(Properties.Settings.Default.LastUsedProjectFolder, "*.java", SearchOption.AllDirectories);
+            ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
+
+            return TempDir;
+        }
+
         UserControl CreateInstanceOfUserControlPlugin(Assembly asmUC)
         {
             UserControl UControl = null;
@@ -429,15 +441,8 @@ namespace AndroidCodeHero
             {
                 tslAssistingAndroidProject.Text = "Assisting Android Project : " + FolderName;
                 sAssistingAndroidProject = FolderName;
-
                 Properties.Settings.Default.LastUsedProjectFolder = FolderName;
-
                 Properties.Settings.Default.Save();
-
-                // Analyze Java Source Code
-                //string TempDir = ACHCodeGenerator.Analyzer.GetTempDirectory();
-                //string[] CodeFiles = System.IO.Directory.GetFiles(FolderName, "*.java", SearchOption.AllDirectories);
-                //ACHCodeGenerator.Analyzer.AnalyzeFiles(CodeFiles,TempDir);
 
                 return true;
 

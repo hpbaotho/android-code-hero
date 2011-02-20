@@ -46,6 +46,7 @@
             this.btnScanAndroidProject.TabIndex = 0;
             this.btnScanAndroidProject.Text = "Scan Android Project";
             this.btnScanAndroidProject.UseVisualStyleBackColor = true;
+            this.btnScanAndroidProject.Click += new System.EventHandler(this.btnScanAndroidProject_Click);
             // 
             // tabcScanResult
             // 
