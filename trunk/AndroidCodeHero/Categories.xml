@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<categories>
+  <category id="Database">
+    <name>Databases</name>
+    <description>Database Category Description</description>
+    <image>databases.png</image>
+  </category>
+  <category id="Network">
+    <name>Network</name>
+    <description>Network Category Description</description>
+    <image>network.png</image>
+  </category>
+  <category id="Network_Socket" parent="Network">
+    <name>Socket</name>
+    <description>Socket Category Description</description>
+    <image>socket.png</image>
+  </category>
+  <category id="Network_Json" parent="Network">
+    <name>Json</name>
+    <description>Network Json Category Description</description>
+    <image>network.png</image>
+  </category>
+  <category id="Network_WebService" parent="Network">
+    <name>WebService</name>
+    <description>Network WebService Category Description</description>
+    <image>network.png</image>
+  </category>
+  <category id="Network_Other" parent="Network">
+    <name>Other</name>
+    <description>Network Other Category Description</description>
+    <image>network.png</image>
+  </category>
+  <category id="Layout">
+    <name>Layout</name>
+    <description>Layout Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Archive">
+    <name>Archive</name>
+    <description>Archive Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Archive_Zip" parent="Archive">
+    <name>Zip</name>
+    <description>Zip Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Graphics">
+    <name>Graphics</name>
+    <description>Graphics Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Graphics_Font" parent="Graphics">
+    <name>Font</name>
+    <description>Font Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Sensor">
+    <name>Sensor</name>
+    <description>Sensor Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Sensor_Orientation" parent="Sensor">
+    <name>Orientation</name>
+    <description>Orientation Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Hardware">
+    <name>Hardware</name>
+    <description>Hardware Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Hardware_Wifi" parent="Hardware">
+    <name>Wifi</name>
+    <description>Wifi Category Description</description>
+    <image>wrench.png</image>
+  </category>
+  <category id="Services">
+    <name>Services</name>
+    <description>Services Category Description</description>
+    <image>wrench.png</image>
+  </category>
+</categories>
