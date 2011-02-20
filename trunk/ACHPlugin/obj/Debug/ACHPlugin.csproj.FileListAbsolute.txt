@@ -1,0 +1,8 @@
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\bin\Debug\ACHPlugin.dll
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\bin\Debug\ACHPlugin.pdb
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ResGen.read.1.tlog
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ResGen.write.1.tlog
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ACHPlugin.dll
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ACHPlugin.pdb
+C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHPlugin\obj\Debug\ACHPlugin.Network_Socket.resources
