@@ -80,4 +80,9 @@
     <description>Services Category Description</description>
     <image>wrench.png</image>
   </category>
+  <category id="Tools">
+    <name>Tools</name>
+    <description>Tools Category Description</description>
+    <image>wrench.png</image>
+  </category>
 </categories>
