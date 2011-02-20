@@ -111,5 +111,19 @@ namespace ACHPlugin
         {
             InitializeComponent();
         }
+
+        private void btnScanAndroidProject_Click(object sender, EventArgs e)
+        {
+
+            Control cntrlParent = Parent;
+
+            while (cntrlParent.Parent != null)
+                cntrlParent = cntrlParent.Parent;
+
+            MethodInfo miAPSC = cntrlParent.GetType().UnderlyingSystemType.GetMethod("AnalyzeProjectSourceCode");
+            miAPSC.Invoke(cntrlParent, null);
+
+
+        }
     }
 }
