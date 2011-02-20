@@ -54,6 +54,10 @@
       <DependentUpon>Tool.Cleanup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Images\cleanup.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>COPY "$(TargetPath)" "C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\AndroidCodeHero\Plugins"</PostBuildEvent>
