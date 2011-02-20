@@ -26,8 +26,13 @@ namespace ACHCodeGenerator
 
         }
 
-        public static void AnalyzeFiles(string[] FileNames, string OutputDir)
+        private static string _CoreFolder;
+
+        public static void AnalyzeFiles(string CoreFolder,string[] FileNames, string OutputDir)
         {
+
+            _CoreFolder = CoreFolder;
+            
             apb = new AnalyzerProgressBar(FileNames.Length);
 
             BackgroundWorker bw = new BackgroundWorker();
@@ -67,7 +72,7 @@ namespace ACHCodeGenerator
             for (int n = 0; n < afh.FileNames.Length; n++)
             {
                 afh.bw.ReportProgress(n + 1);
-                AnalyzeFile(afh.FileNames[n], afh.OutputDir);
+                AnalyzeFile(_CoreFolder, afh.FileNames[n], afh.OutputDir);
             }
 
         
@@ -81,17 +86,19 @@ namespace ACHCodeGenerator
             apb.Close();            
         }
 
-        private static void AnalyzeFile(string FileName, string OutputDir)
+        private static void AnalyzeFile(string CoreFolder,string FileName, string OutputDir)
         {
 
             //java -jar javaparser.jar 
             //"C:\MyAndroidProjects\Dev\android\workspace\Brainitize\src\brainitize\paradoxia\se\Brainitize.java" 
             //"C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\Antlr\ast"
 
+            
+
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
             p.StartInfo.FileName = "\"" + @"javaw" + "\"";
-            p.StartInfo.Arguments = "-jar javaparser.jar " + "\"" + FileName + "\" \"" + OutputDir + "\"";
+            p.StartInfo.Arguments = "-jar \""+CoreFolder+"\\javaparser.jar\" " + "\"" + FileName + "\" \"" + OutputDir + "\"";
 
             p.StartInfo.UseShellExecute = false;
             p.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
