@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: javasourceparser.paradoxia.se
+Class-Path: javaparser.jar
+Require-Bundle: org.eclipse.core.resources; bundle-version="0.0.0"
