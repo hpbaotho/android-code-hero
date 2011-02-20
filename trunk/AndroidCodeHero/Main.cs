@@ -293,7 +293,7 @@ namespace AndroidCodeHero
                     PluginInfo pi = FindPIFromCategoryId(e.Node.Name);
 
                     ContextMenu cm = new ContextMenu();
-                    MenuItem mi = cm.MenuItems.Add("Create " + pi.Name);
+                    MenuItem mi = cm.MenuItems.Add("Create instance of " + pi.Name);
                     mi.Tag = pi;
                     mi.Click += new EventHandler(CreatePluginInstance_Click);
 
@@ -327,6 +327,7 @@ namespace AndroidCodeHero
             this.splitMain.Panel2.Controls.Clear();
             if (e.Node.Tag != null && e.Node.Name.StartsWith("plgid_"))
             {
+                ((UserControl)e.Node.Tag).Dock = DockStyle.Fill;
                 this.splitMain.Panel2.Controls.Add((UserControl)e.Node.Tag);
                 //AndroidCodeHero.Controls.DataTable cDT = new Controls.DataTable();
                 //this.splitMain.Panel2.Controls.Add(cDT);
