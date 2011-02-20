@@ -121,7 +121,12 @@ namespace ACHPlugin
                 cntrlParent = cntrlParent.Parent;
 
             MethodInfo miAPSC = cntrlParent.GetType().UnderlyingSystemType.GetMethod("AnalyzeProjectSourceCode");
-            miAPSC.Invoke(cntrlParent, null);
+            object oResult = miAPSC.Invoke(cntrlParent, null);
+
+            string sResultFolder = (string)oResult;
+
+
+
 
 
         }
