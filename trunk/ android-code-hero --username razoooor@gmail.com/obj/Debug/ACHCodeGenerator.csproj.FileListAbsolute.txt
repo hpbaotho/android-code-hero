@@ -1,9 +1,0 @@
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\bin\Debug\ACHCodeGenerator.dll
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\bin\Debug\ACHCodeGenerator.pdb
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ACHCodeGenerator.dll
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ACHCodeGenerator.pdb
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\bin\Debug\javaparser.jar
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ACHCodeGenerator.AnalyzerProgressBar.resources
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ResGen.read.1.tlog
-C:\Users\Mikael\documents\visual studio 2010\Projects\AndroidCodeHero\ACHCodeGenerator\obj\Debug\ResGen.write.1.tlog
