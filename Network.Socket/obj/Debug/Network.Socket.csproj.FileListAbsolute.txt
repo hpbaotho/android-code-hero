@@ -1,0 +1,8 @@
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\bin\Debug\ACHP.Network.Socket.dll
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\bin\Debug\ACHP.Network.Socket.pdb
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ACHPlugin.Network_Socket.resources
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ResGen.read.1.tlog
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ResGen.write.1.tlog
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ACHP.Network.Socket.dll
+C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ACHPlugins\Network.Socket\obj\Debug\ACHP.Network.Socket.pdb
