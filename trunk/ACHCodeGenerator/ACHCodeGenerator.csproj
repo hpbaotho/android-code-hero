@@ -61,6 +61,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>COPY "$(TargetPath)" "C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\AndroidCodeHero\Core"
+COPY "$(TargetDir)javaparser.jar" "C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\AndroidCodeHero\Core"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
