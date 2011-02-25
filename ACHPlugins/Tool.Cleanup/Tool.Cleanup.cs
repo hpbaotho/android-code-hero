@@ -125,26 +125,63 @@ namespace ACHPlugin
 
             string sResultFolder = (string)oResult;
 
+            // Parse R. file
+
             var resPRF = CodeAnalyzer.ParseResourceFile(sResultFolder + "\\R.jsp");
 
             DataSet ds = new DataSet();
-            DataTable dt = new DataTable("All resources");
-            DataColumn dcCategory = new DataColumn("Category", typeof(string));
-            DataColumn dcName = new DataColumn("Name", typeof(string));
-            dt.Columns.Add(dcCategory);
-            dt.Columns.Add(dcName);
-            ds.Tables.Add(dt);
+            DataTable dtAllRes = new DataTable("All resources");
+            DataColumn dcARCategory = new DataColumn("Category", typeof(string));
+            DataColumn dcARName = new DataColumn("Name", typeof(string));
+            DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
+            dtAllRes.Columns.Add(dcARCategory);
+            dtAllRes.Columns.Add(dcARName);
+            dtAllRes.Columns.Add(dcARRefId);
+            ds.Tables.Add(dtAllRes);
 
             foreach (var r in resPRF)
             {
-                DataRow dr = dt.NewRow();
+                DataRow dr = dtAllRes.NewRow();
                 dr["Category"] = r.Category;
                 dr["Name"] = r.RefName;
-                dt.Rows.Add(dr);
+                dr["RefId"] = r.RefId;
+                dtAllRes.Rows.Add(dr);
             }
 
             dgvAllResources.DataSource = null;
-            dgvAllResources.DataSource = ds.Tables[0];
+            dgvAllResources.DataSource = ds.Tables["All resources"];
+
+            // Parse all other files
+
+            DataTable dtUsedRes = new DataTable("Used resources");
+            DataColumn dcURRefId = new DataColumn("RefId", typeof(string));
+            DataColumn dcURRowLine = new DataColumn("RowLine", typeof(string));
+            DataColumn dcURClassFile = new DataColumn("ClassFile", typeof(string));
+            dtUsedRes.Columns.Add(dcURRefId);
+            dtUsedRes.Columns.Add(dcURRowLine);
+            dtUsedRes.Columns.Add(dcURClassFile);
+            ds.Tables.Add(dtUsedRes);
+
+            string[] sJSPFiles = Directory.GetFiles(sResultFolder, "*.jsp");
+            foreach (var sFile in sJSPFiles)
+            {
+                if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    var resCRF = CodeAnalyzer.ParseJavaFile(resPRF, sFile);
+                    foreach (var rcrf in resCRF)
+                    {
+                        DataRow dr = dtUsedRes.NewRow();
+                        dr["RefId"] = rcrf.Ref.RefId;
+                        dr["RowLine"] = rcrf.CodeLineNumber;
+                        dr["ClassFile"] = rcrf.ClassFile;
+                        dtUsedRes.Rows.Add(dr);
+                    }
+
+                }
+            }
+
+            dgvUsedResources.DataSource = null;
+            dgvUsedResources.DataSource = ds.Tables["Used resources"];
 
 
 
