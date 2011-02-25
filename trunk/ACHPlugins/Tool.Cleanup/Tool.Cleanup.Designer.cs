@@ -34,9 +34,12 @@
             this.tabpUsedResources = new System.Windows.Forms.TabPage();
             this.tabpAllResources = new System.Windows.Forms.TabPage();
             this.dgvAllResources = new System.Windows.Forms.DataGridView();
+            this.dgvUsedResources = new System.Windows.Forms.DataGridView();
             this.tabcScanResult.SuspendLayout();
+            this.tabpUsedResources.SuspendLayout();
             this.tabpAllResources.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllResources)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).BeginInit();
             this.SuspendLayout();
             // 
             // btnScanAndroidProject
@@ -77,6 +80,7 @@
             // 
             // tabpUsedResources
             // 
+            this.tabpUsedResources.Controls.Add(this.dgvUsedResources);
             this.tabpUsedResources.Location = new System.Drawing.Point(4, 22);
             this.tabpUsedResources.Name = "tabpUsedResources";
             this.tabpUsedResources.Padding = new System.Windows.Forms.Padding(3);
@@ -104,6 +108,15 @@
             this.dgvAllResources.Size = new System.Drawing.Size(533, 422);
             this.dgvAllResources.TabIndex = 0;
             // 
+            // dgvUsedResources
+            // 
+            this.dgvUsedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsedResources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUsedResources.Location = new System.Drawing.Point(3, 3);
+            this.dgvUsedResources.Name = "dgvUsedResources";
+            this.dgvUsedResources.Size = new System.Drawing.Size(527, 416);
+            this.dgvUsedResources.TabIndex = 1;
+            // 
             // Tool_Cleanup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,8 +126,10 @@
             this.Name = "Tool_Cleanup";
             this.Size = new System.Drawing.Size(546, 492);
             this.tabcScanResult.ResumeLayout(false);
+            this.tabpUsedResources.ResumeLayout(false);
             this.tabpAllResources.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllResources)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -127,5 +142,6 @@
         private System.Windows.Forms.TabPage tabpUsedResources;
         private System.Windows.Forms.TabPage tabpAllResources;
         private System.Windows.Forms.DataGridView dgvAllResources;
+        private System.Windows.Forms.DataGridView dgvUsedResources;
     }
 }

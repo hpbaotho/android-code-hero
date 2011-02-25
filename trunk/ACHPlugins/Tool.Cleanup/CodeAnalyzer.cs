@@ -9,22 +9,25 @@ namespace ACHPlugin
     public class CodeAnalyzer
     {
 
-        //TypeDeclaration 'R' at line10
-        //NodeName:R,NodeType:42
-        //TypeDeclaration 'attr' at line11
-        //NodeName:attr,NodeType:42
-        //TypeDeclaration 'drawable' at line13
-        //NodeName:drawable,NodeType:42
-        //Declaration of 'brainitizelogo' at line14
-        //NodeName:brainitizelogo,NodeType:42
-        //Declaration of 'c_r10_c1' at line15
-        //NodeName:c_r10_c1,NodeType:42
-        //Declaration of 'c_r10_c10' at line16
+        public class CodeResourceRef
+        {
+            public string ClassFile;
+            public ResourceRef Ref;
+            public string CodeLineNumber;
+        }
 
         public class ResourceRef
         {
             public string Category;
             public string RefName;
+            public string RefId;
+        }
+
+        private static string ExtractRowNumber(string ValueText)
+        {
+            int nStart = ValueText.IndexOf("at line") + "at line".Length;
+            string sValue = ValueText.Substring(nStart);
+            return sValue;
         }
 
         private static string ExtractValue(string ValueText)
@@ -34,6 +37,44 @@ namespace ACHPlugin
             string sValue = ValueText.Substring(nStart, nLen);
             return sValue;
         }
+
+        private static ResourceRef FindRR(ResourceRef[] RRs, string RefId)
+        {
+            foreach (var rr in RRs)
+            {
+                if (rr.RefId.Equals(RefId))
+                    return rr;
+            }
+            return null;
+        }
+
+        public static CodeResourceRef[] ParseJavaFile(ResourceRef[] RR, string FilePath)
+        {
+            StreamReader sr = new StreamReader(FilePath);
+            List<CodeResourceRef> listRR = new List<CodeResourceRef>();
+            while (!sr.EndOfStream)
+            {
+                string sLine = sr.ReadLine();
+                if (sLine.StartsWith("QualifiedName"))
+                {
+                    string curDec = ExtractValue(sLine);
+                    ResourceRef rr = FindRR(RR, curDec);
+                    if (rr != null)
+                    {
+
+                        CodeResourceRef crr = new CodeResourceRef();
+                        crr.CodeLineNumber = ExtractRowNumber(sLine);
+                        crr.Ref = rr;
+                        crr.ClassFile = Path.GetFileNameWithoutExtension(FilePath) + ".java";
+                        listRR.Add(crr);
+                    }
+                }
+
+            }
+            sr.Close();
+            return listRR.ToArray();
+        }
+
 
         public static ResourceRef[] ParseResourceFile(string FilePath)
         {
@@ -53,6 +94,7 @@ namespace ACHPlugin
                     ResourceRef rr = new ResourceRef();
                     rr.Category = curTypeDec;
                     rr.RefName = curDec;
+                    rr.RefId = "R." + rr.Category + "." + rr.RefName;
                     listRR.Add(rr);
                 }
 
