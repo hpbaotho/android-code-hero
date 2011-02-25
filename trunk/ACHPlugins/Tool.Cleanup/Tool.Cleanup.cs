@@ -162,12 +162,15 @@ namespace ACHPlugin
             dtUsedRes.Columns.Add(dcURClassFile);
             ds.Tables.Add(dtUsedRes);
 
+            List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
+
             string[] sJSPFiles = Directory.GetFiles(sResultFolder, "*.jsp");
             foreach (var sFile in sJSPFiles)
             {
                 if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
                 {
                     var resCRF = CodeAnalyzer.ParseJavaFile(resPRF, sFile);
+                    listTotalCRR.AddRange(resCRF);
                     foreach (var rcrf in resCRF)
                     {
                         DataRow dr = dtUsedRes.NewRow();
@@ -182,6 +185,18 @@ namespace ACHPlugin
 
             dgvUsedResources.DataSource = null;
             dgvUsedResources.DataSource = ds.Tables["Used resources"];
+
+
+            // Find Unused Resources
+
+            DataTable dtUnusedRes = new DataTable("Unused resources");
+            DataColumn dcARCategory = new DataColumn("Category", typeof(string));
+            DataColumn dcARName = new DataColumn("Name", typeof(string));
+            DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
+            dtAllRes.Columns.Add(dcARCategory);
+            dtAllRes.Columns.Add(dcARName);
+            dtAllRes.Columns.Add(dcARRefId);
+            ds.Tables.Add(dtAllRes);
 
 
 

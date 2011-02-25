@@ -48,6 +48,33 @@ namespace ACHPlugin
             return null;
         }
 
+        private static bool RRinCRR(ResourceRef RR, CodeResourceRef[] CRRs)
+        {
+            foreach (var crr in CRRs)
+            {
+                if (crr.Ref.Equals(RR))
+                    return true;
+            }
+            return false;
+
+        }
+
+        public static ResourceRef[] UnusedResources(ResourceRef[] RRs, CodeResourceRef[] TotalCRR)
+        {
+
+            List<ResourceRef> listUnusedRR = new List<ResourceRef>();
+
+            foreach (var rr in RRs)
+            {
+                if (!RRinCRR(rr, TotalCRR))
+                    listUnusedRR.Add(rr);
+            }
+
+
+            return listUnusedRR.ToArray();
+
+        }
+
         public static CodeResourceRef[] ParseJavaFile(ResourceRef[] RR, string FilePath)
         {
             StreamReader sr = new StreamReader(FilePath);
