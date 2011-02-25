@@ -190,15 +190,29 @@ namespace ACHPlugin
             // Find Unused Resources
 
             DataTable dtUnusedRes = new DataTable("Unused resources");
-            DataColumn dcARCategory = new DataColumn("Category", typeof(string));
-            DataColumn dcARName = new DataColumn("Name", typeof(string));
-            DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
-            dtAllRes.Columns.Add(dcARCategory);
-            dtAllRes.Columns.Add(dcARName);
-            dtAllRes.Columns.Add(dcARRefId);
-            ds.Tables.Add(dtAllRes);
+            DataColumn dcUURCategory = new DataColumn("Category", typeof(string));
+            DataColumn dcUURName = new DataColumn("Name", typeof(string));
+            DataColumn dcUURRefId = new DataColumn("RefId", typeof(string));
+            dtUnusedRes.Columns.Add(dcUURCategory);
+            dtUnusedRes.Columns.Add(dcUURName);
+            dtUnusedRes.Columns.Add(dcUURRefId);
+            ds.Tables.Add(dtUnusedRes);
+
+            var unusedRR = CodeAnalyzer.UnusedResources(resPRF, listTotalCRR.ToArray());
+
+            foreach (var urr in unusedRR)
+            {
+                DataRow dr = dtUnusedRes.NewRow();
+                dr["Category"] = urr.Category;
+                dr["Name"] = urr.RefName;
+                dr["RefId"] = urr.RefId;
+                dtUnusedRes.Rows.Add(dr);
 
 
+            }
+
+            dgvUnusedResources.DataSource = null;
+            dgvUnusedResources.DataSource = ds.Tables["Unused resources"];
 
 
         }
