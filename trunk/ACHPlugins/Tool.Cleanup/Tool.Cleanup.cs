@@ -125,7 +125,26 @@ namespace ACHPlugin
 
             string sResultFolder = (string)oResult;
 
-            CodeAnalyzer.ParseResourceFile(sResultFolder + "\\R.jsp");
+            var resPRF = CodeAnalyzer.ParseResourceFile(sResultFolder + "\\R.jsp");
+
+            DataSet ds = new DataSet();
+            DataTable dt = new DataTable("All resources");
+            DataColumn dcCategory = new DataColumn("Category", typeof(string));
+            DataColumn dcName = new DataColumn("Name", typeof(string));
+            dt.Columns.Add(dcCategory);
+            dt.Columns.Add(dcName);
+            ds.Tables.Add(dt);
+
+            foreach (var r in resPRF)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Category"] = r.Category;
+                dr["Name"] = r.RefName;
+                dt.Rows.Add(dr);
+            }
+
+            dgvAllResources.DataSource = null;
+            dgvAllResources.DataSource = ds.Tables[0];
 
 
 

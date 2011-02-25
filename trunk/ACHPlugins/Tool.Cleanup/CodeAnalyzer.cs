@@ -29,7 +29,7 @@ namespace ACHPlugin
 
         private static string ExtractValue(string ValueText)
         {
-            int nStart = ValueText.IndexOf('\'');
+            int nStart = ValueText.IndexOf('\'')+1;
             int nLen =  ValueText.LastIndexOf('\'') - nStart;
             string sValue = ValueText.Substring(nStart, nLen);
             return sValue;
