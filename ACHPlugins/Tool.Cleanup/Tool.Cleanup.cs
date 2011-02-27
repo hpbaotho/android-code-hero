@@ -120,6 +120,11 @@ namespace ACHPlugin
                 foreach (var xa in xeChild.Attributes())
                 {
                     listXA.Add(xa);
+
+                    System.Xml.IXmlLineInfo info = xa;
+
+                    System.Diagnostics.Debug.WriteLine(xa.Name.LocalName + "=" + xa.Value.ToString()+" at "+info.LineNumber.ToString());
+
                 
                 }
             }
@@ -137,8 +142,9 @@ namespace ACHPlugin
             foreach (var sXMLFile in sXMLFiles)
             {
                 List<XAttribute> listXA = new List<XAttribute>();
-                XDocument xd = XDocument.Load(sXMLFile);
+                XDocument xd = XDocument.Load(sXMLFile,LoadOptions.SetLineInfo);
                 XElement xeRoot = xd.Root;
+                System.Diagnostics.Debug.WriteLine("XMLFile=" + sXMLFile);
                 ScanForAttributeElements(xeRoot, listXA);
 
 
