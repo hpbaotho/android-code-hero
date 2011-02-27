@@ -30,6 +30,8 @@ namespace AndroidCodeHero
 
         private object ACHCodeGenerator = null;
 
+       
+
         public string AnalyzeProjectSourceCode()
         {
 
@@ -247,6 +249,12 @@ namespace AndroidCodeHero
             return null;
         }
 
+        public static string ActiveAndroidProjectFolder
+        {
+            get;
+            set;
+        }
+
         public Main()
         {
             InitializeComponent();
@@ -268,9 +276,9 @@ namespace AndroidCodeHero
             tvAndroidProject.AfterLabelEdit += new NodeLabelEditEventHandler(tvAndroidProject_AfterLabelEdit);
             tvAndroidProject.BeforeLabelEdit += new NodeLabelEditEventHandler(tvAndroidProject_BeforeLabelEdit);
 
-            string LastProjectFolder = Properties.Settings.Default.LastUsedProjectFolder;
-            if (LastProjectFolder.Length > 0)
-                SetProjectFolder(LastProjectFolder);
+            ActiveAndroidProjectFolder = Properties.Settings.Default.LastUsedProjectFolder;
+            if (ActiveAndroidProjectFolder.Length > 0)
+                SetProjectFolder(ActiveAndroidProjectFolder);
 
 
 

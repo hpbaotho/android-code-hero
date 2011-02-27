@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
+using System.Xml.Linq;
 
 namespace ACHPlugin
 {
@@ -112,6 +113,40 @@ namespace ACHPlugin
             InitializeComponent();
         }
 
+        private void ScanForAttributeElements(XElement parent, List<XAttribute> listXA)
+        {
+            foreach (var xeChild in parent.Descendants())
+            {
+                foreach (var xa in xeChild.Attributes())
+                {
+                    listXA.Add(xa);
+                
+                }
+            }
+
+        }
+
+
+
+
+        private void ScanXMLFiles(string ProjectFolder)
+        {
+            string[] sXMLFiles = Directory.GetFiles(ProjectFolder, "*.xml", SearchOption.AllDirectories);
+
+
+            foreach (var sXMLFile in sXMLFiles)
+            {
+                List<XAttribute> listXA = new List<XAttribute>();
+                XDocument xd = XDocument.Load(sXMLFile);
+                XElement xeRoot = xd.Root;
+                ScanForAttributeElements(xeRoot, listXA);
+
+
+ 
+            }
+
+        }
+
         private void btnScanAndroidProject_Click(object sender, EventArgs e)
         {
 
@@ -121,13 +156,19 @@ namespace ACHPlugin
                 cntrlParent = cntrlParent.Parent;
 
             MethodInfo miAPSC = cntrlParent.GetType().UnderlyingSystemType.GetMethod("AnalyzeProjectSourceCode");
-            object oResult = miAPSC.Invoke(cntrlParent, null);
+            object oResultAPSC = miAPSC.Invoke(cntrlParent, null);
+            string sAnalyzeProjectSourceCode = (string)oResultAPSC;
 
-            string sResultFolder = (string)oResult;
+            PropertyInfo piAAPF = cntrlParent.GetType().UnderlyingSystemType.GetProperty("ActiveAndroidProjectFolder");
+            object oResultAAPF = piAAPF.GetValue(cntrlParent, null);
+            string sActiveAndroidProjectFolder = (string)oResultAAPF;
+            ScanXMLFiles(sActiveAndroidProjectFolder);
+
+            
 
             // Parse R. file
 
-            var resPRF = CodeAnalyzer.ParseResourceFile(sResultFolder + "\\R.jsp");
+            var resPRF = CodeAnalyzer.ParseResourceFile(sAnalyzeProjectSourceCode + "\\R.jsp");
 
             DataSet ds = new DataSet();
             DataTable dtAllRes = new DataTable("All resources");
@@ -164,7 +205,7 @@ namespace ACHPlugin
 
             List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
 
-            string[] sJSPFiles = Directory.GetFiles(sResultFolder, "*.jsp");
+            string[] sJSPFiles = Directory.GetFiles(sAnalyzeProjectSourceCode, "*.jsp");
             foreach (var sFile in sJSPFiles)
             {
                 if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
