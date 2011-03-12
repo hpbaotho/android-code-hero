@@ -97,6 +97,7 @@
             this.dgvUnusedResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUnusedResources.Size = new System.Drawing.Size(527, 416);
             this.dgvUnusedResources.TabIndex = 2;
+            this.dgvUnusedResources.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUnusedResources_CellClick);
             // 
             // tabpUsedResources
             // 
