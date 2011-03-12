@@ -182,9 +182,10 @@ namespace ACHPlugin
 
         }
 
-        private void btnScanAndroidProject_Click(object sender, EventArgs e)
+        private void BeginScanProject()
         {
 
+     
             Control cntrlParent = Parent;
 
             while (cntrlParent.Parent != null)
@@ -323,6 +324,41 @@ namespace ACHPlugin
                     dt.Rows[e.RowIndex][3] = !((bool)dt.Rows[e.RowIndex][3]);
             }
 
+        }
+
+        private void tsbBeginScanProject_Click(object sender, EventArgs e)
+        {
+            BeginScanProject();
+        }
+
+        private void dgvUnusedResources_SelectionChanged(object sender, EventArgs e)
+        {
+            tsbCheck.Enabled = true;
+            tsbUncheck.Enabled = true;
+        }
+
+        private void tsbCheck_Click(object sender, EventArgs e)
+        {
+            DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+            foreach (var r in dgvUnusedResources.SelectedRows)
+            {
+                DataGridViewRow dgvr = (DataGridViewRow)r;
+                int ind = dgvr.Index;
+                dt.Rows[ind][3] = true;
+            }
+
+
+        }
+
+        private void tsbUncheck_Click(object sender, EventArgs e)
+        {
+            DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+            foreach (var r in dgvUnusedResources.SelectedRows)
+            {
+                DataGridViewRow dgvr = (DataGridViewRow)r;
+                int ind = dgvr.Index;
+                dt.Rows[ind][3] = false;
+            }
         }
     }
 }
