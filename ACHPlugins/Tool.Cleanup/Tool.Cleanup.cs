@@ -113,17 +113,48 @@ namespace ACHPlugin
             InitializeComponent();
         }
 
-        private void ScanForAttributeElements(XElement parent, List<XAttribute> listXA)
+        private bool ContainsResourceRef(string Value)
+        {
+            if (Value.StartsWith("@") && Value.IndexOf('/') > 0 && Value.IndexOf('+') == -1)
+                return true;
+            else
+                return false;
+
+        }
+
+        private void ScanForAttributeElements(XElement parent, List<CodeAnalyzer.CodeResourceRef> listCRR, string xmlFile)
         {
             foreach (var xeChild in parent.Descendants())
             {
                 foreach (var xa in xeChild.Attributes())
                 {
-                    listXA.Add(xa);
+                    
+                    if(ContainsResourceRef(xa.Value.ToString()))
+                    {
+                        System.Xml.IXmlLineInfo info = xa;
+                        CodeAnalyzer.CodeResourceRef crr = new CodeAnalyzer.CodeResourceRef();
+                        crr.ClassFile = xmlFile;
+                        crr.CodeLineNumber = info.LineNumber.ToString();
 
-                    System.Xml.IXmlLineInfo info = xa;
+                        CodeAnalyzer.ResourceRef rr = new CodeAnalyzer.ResourceRef();
+                        rr.Category = "XML";
+                        rr.RefId = xa.Value.Replace("@","R.").Replace("/","."); // @drawable/xxxx
+                        rr.RefName = "RefName";
+
+
+                        crr.Ref = rr;
+
+
+                        listCRR.Add(crr);
+
+       
+       
+
+        
+
 
                     System.Diagnostics.Debug.WriteLine(xa.Name.LocalName + "=" + xa.Value.ToString()+" at "+info.LineNumber.ToString());
+                    }
 
                 
                 }
@@ -134,22 +165,20 @@ namespace ACHPlugin
 
 
 
-        private void ScanXMLFiles(string ProjectFolder)
+        private List<CodeAnalyzer.CodeResourceRef> ScanXMLFiles(string ProjectFolder)
         {
             string[] sXMLFiles = Directory.GetFiles(ProjectFolder, "*.xml", SearchOption.AllDirectories);
 
-
+            List<CodeAnalyzer.CodeResourceRef> listCR = new List<CodeAnalyzer.CodeResourceRef>();
             foreach (var sXMLFile in sXMLFiles)
             {
-                List<XAttribute> listXA = new List<XAttribute>();
                 XDocument xd = XDocument.Load(sXMLFile,LoadOptions.SetLineInfo);
                 XElement xeRoot = xd.Root;
                 System.Diagnostics.Debug.WriteLine("XMLFile=" + sXMLFile);
-                ScanForAttributeElements(xeRoot, listXA);
-
-
- 
+                ScanForAttributeElements(xeRoot, listCR,  System.IO.Path.GetFileName(sXMLFile));
             }
+
+            return listCR;
 
         }
 
@@ -168,7 +197,7 @@ namespace ACHPlugin
             PropertyInfo piAAPF = cntrlParent.GetType().UnderlyingSystemType.GetProperty("ActiveAndroidProjectFolder");
             object oResultAAPF = piAAPF.GetValue(cntrlParent, null);
             string sActiveAndroidProjectFolder = (string)oResultAAPF;
-            ScanXMLFiles(sActiveAndroidProjectFolder);
+            List<CodeAnalyzer.CodeResourceRef> listCR = ScanXMLFiles(sActiveAndroidProjectFolder);
 
             
 
@@ -228,6 +257,17 @@ namespace ACHPlugin
                     }
 
                 }
+
+
+                foreach (var lcr in listCR)
+                {
+                    DataRow dr = dtUsedRes.NewRow();
+                    dr["RefId"] = lcr.Ref.RefId;
+                    dr["RowLine"] = lcr.CodeLineNumber;
+                    dr["ClassFile"] = lcr.ClassFile;
+                    dtUsedRes.Rows.Add(dr);
+                }
+
             }
 
             dgvUsedResources.DataSource = null;

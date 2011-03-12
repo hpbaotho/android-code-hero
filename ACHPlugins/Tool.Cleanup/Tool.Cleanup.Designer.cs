@@ -28,21 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnScanAndroidProject = new System.Windows.Forms.Button();
             this.tabcScanResult = new System.Windows.Forms.TabControl();
             this.tabpUnusedResources = new System.Windows.Forms.TabPage();
+            this.dgvUnusedResources = new System.Windows.Forms.DataGridView();
             this.tabpUsedResources = new System.Windows.Forms.TabPage();
+            this.dgvUsedResources = new System.Windows.Forms.DataGridView();
             this.tabpAllResources = new System.Windows.Forms.TabPage();
             this.dgvAllResources = new System.Windows.Forms.DataGridView();
-            this.dgvUsedResources = new System.Windows.Forms.DataGridView();
-            this.dgvUnusedResources = new System.Windows.Forms.DataGridView();
             this.tabcScanResult.SuspendLayout();
             this.tabpUnusedResources.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUnusedResources)).BeginInit();
             this.tabpUsedResources.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).BeginInit();
             this.tabpAllResources.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllResources)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUnusedResources)).BeginInit();
             this.SuspendLayout();
             // 
             // btnScanAndroidProject
@@ -82,6 +85,19 @@
             this.tabpUnusedResources.Text = "Unused Resources";
             this.tabpUnusedResources.UseVisualStyleBackColor = true;
             // 
+            // dgvUnusedResources
+            // 
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUnusedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvUnusedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUnusedResources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUnusedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvUnusedResources.Location = new System.Drawing.Point(3, 3);
+            this.dgvUnusedResources.Name = "dgvUnusedResources";
+            this.dgvUnusedResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUnusedResources.Size = new System.Drawing.Size(527, 416);
+            this.dgvUnusedResources.TabIndex = 2;
+            // 
             // tabpUsedResources
             // 
             this.tabpUsedResources.Controls.Add(this.dgvUsedResources);
@@ -92,6 +108,19 @@
             this.tabpUsedResources.TabIndex = 1;
             this.tabpUsedResources.Text = "Used Resources";
             this.tabpUsedResources.UseVisualStyleBackColor = true;
+            // 
+            // dgvUsedResources
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUsedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvUsedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsedResources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUsedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvUsedResources.Location = new System.Drawing.Point(3, 3);
+            this.dgvUsedResources.Name = "dgvUsedResources";
+            this.dgvUsedResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUsedResources.Size = new System.Drawing.Size(527, 416);
+            this.dgvUsedResources.TabIndex = 1;
             // 
             // tabpAllResources
             // 
@@ -105,30 +134,16 @@
             // 
             // dgvAllResources
             // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvAllResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvAllResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAllResources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvAllResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvAllResources.Location = new System.Drawing.Point(0, 0);
             this.dgvAllResources.Name = "dgvAllResources";
+            this.dgvAllResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAllResources.Size = new System.Drawing.Size(533, 422);
             this.dgvAllResources.TabIndex = 0;
-            // 
-            // dgvUsedResources
-            // 
-            this.dgvUsedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUsedResources.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUsedResources.Location = new System.Drawing.Point(3, 3);
-            this.dgvUsedResources.Name = "dgvUsedResources";
-            this.dgvUsedResources.Size = new System.Drawing.Size(527, 416);
-            this.dgvUsedResources.TabIndex = 1;
-            // 
-            // dgvUnusedResources
-            // 
-            this.dgvUnusedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUnusedResources.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUnusedResources.Location = new System.Drawing.Point(3, 3);
-            this.dgvUnusedResources.Name = "dgvUnusedResources";
-            this.dgvUnusedResources.Size = new System.Drawing.Size(527, 416);
-            this.dgvUnusedResources.TabIndex = 2;
             // 
             // Tool_Cleanup
             // 
@@ -140,11 +155,11 @@
             this.Size = new System.Drawing.Size(546, 492);
             this.tabcScanResult.ResumeLayout(false);
             this.tabpUnusedResources.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUnusedResources)).EndInit();
             this.tabpUsedResources.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).EndInit();
             this.tabpAllResources.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvAllResources)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUsedResources)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUnusedResources)).EndInit();
             this.ResumeLayout(false);
 
         }
