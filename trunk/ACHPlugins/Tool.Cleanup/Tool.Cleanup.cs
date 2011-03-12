@@ -233,6 +233,7 @@ namespace ACHPlugin
             DataColumn dcURRefId = new DataColumn("RefId", typeof(string));
             DataColumn dcURRowLine = new DataColumn("RowLine", typeof(string));
             DataColumn dcURClassFile = new DataColumn("ClassFile", typeof(string));
+
             dtUsedRes.Columns.Add(dcURRefId);
             dtUsedRes.Columns.Add(dcURRowLine);
             dtUsedRes.Columns.Add(dcURClassFile);
@@ -274,15 +275,20 @@ namespace ACHPlugin
             dgvUsedResources.DataSource = ds.Tables["Used resources"];
 
 
+
             // Find Unused Resources
 
             DataTable dtUnusedRes = new DataTable("Unused resources");
             DataColumn dcUURCategory = new DataColumn("Category", typeof(string));
             DataColumn dcUURName = new DataColumn("Name", typeof(string));
             DataColumn dcUURRefId = new DataColumn("RefId", typeof(string));
+            DataColumn dcIgnore = new DataColumn("Ignore", typeof(Boolean));
+
             dtUnusedRes.Columns.Add(dcUURCategory);
             dtUnusedRes.Columns.Add(dcUURName);
             dtUnusedRes.Columns.Add(dcUURRefId);
+            dtUnusedRes.Columns.Add(dcIgnore);
+
             ds.Tables.Add(dtUnusedRes);
 
             var unusedRR = CodeAnalyzer.UnusedResources(resPRF, listTotalCRR.ToArray());
@@ -301,6 +307,21 @@ namespace ACHPlugin
             dgvUnusedResources.DataSource = null;
             dgvUnusedResources.DataSource = ds.Tables["Unused resources"];
 
+
+        }
+
+        private void dgvUnusedResources_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+
+            if (e.ColumnIndex == 3)
+            {
+                DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+                if (dt.Rows[e.RowIndex][3] == DBNull.Value)
+                    dt.Rows[e.RowIndex][3] = true;
+                else
+                    dt.Rows[e.RowIndex][3] = !((bool)dt.Rows[e.RowIndex][3]);
+            }
 
         }
     }
