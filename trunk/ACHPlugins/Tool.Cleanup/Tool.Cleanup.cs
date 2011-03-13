@@ -187,8 +187,40 @@ namespace ACHPlugin
         private class ResourceObject
         {
 
+
+
+
+
             // ffmpeg -i audio.wav -acodec vorbis -aq 60 audio.ogg
             //Duration: 00:00:00.43, start: 0.000000, bitrate: 156 kb/s
+
+            private static bool UsesAlphaChannel(string ImageFileName)
+            {
+                try
+                {
+                    Bitmap bmpPng = new Bitmap(ImageFileName);
+                    for (int h = 0; h < bmpPng.Height; h++)
+                    {
+                        for (int w = 0; w < bmpPng.Width; w++)
+                        {
+                            Color col = bmpPng.GetPixel(w, h);
+                            int alpha = col.A;
+                            if (alpha < 255)
+                                return true;
+                        }
+
+                    }
+
+                }
+                catch (System.Exception ex)
+                {
+
+
+                }
+                return false;
+
+            }
+
 
             private static void AnalyzeAudioFile(string FilePath, ResourceObject ro)
             {
@@ -238,7 +270,6 @@ namespace ACHPlugin
             public string resourceObjectName;
 
             public string ImageSize; // W200:H500
-            public string ImageType; // JPG, PNG
             public bool ImageUsesAlphaChannel; 
 
             public string AudioBit; // 8-bit, 16 bit
@@ -287,10 +318,13 @@ namespace ACHPlugin
                         }
 
                         if (ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.ImagePNG))
+                            ro.ImageUsesAlphaChannel = UsesAlphaChannel(file);
+
+                        if (ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.ImagePNG) || ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.ImageJPG))
                         {
-
+                            Bitmap bmpTmp = new Bitmap(file);
+                            ro.ImageSize = string.Format("{0}x{1}", bmpTmp.Width, bmpTmp.Height);
                         }
-
                         listRO.Add(ro);
                     }
 
@@ -300,6 +334,19 @@ namespace ACHPlugin
 
             }
             
+
+        }
+
+        private ResourceObject FindResourceObjectByName(ResourceObject[] ros, string Name)
+        {
+            var lros = from l in ros
+                       where l.resourceObjectName.Equals(Name, StringComparison.CurrentCultureIgnoreCase)
+                       select l;
+
+            if (lros.Count() > 0)
+                return lros.First();
+            else
+                return null;
 
         }
 
@@ -321,7 +368,8 @@ namespace ACHPlugin
             string sActiveAndroidProjectFolder = (string)oResultAAPF;
             List<CodeAnalyzer.CodeResourceRef> listCR = ScanXMLFiles(sActiveAndroidProjectFolder);
 
-            ResourceObject.MapResources(sActiveAndroidProjectFolder + "\\res");
+            ResourceObject[] ros = ResourceObject.MapResources(sActiveAndroidProjectFolder + "\\res");
+
 
             
 
@@ -402,6 +450,7 @@ namespace ACHPlugin
             }
 
             dgvUsedResources.DataSource = null;
+            dgvUnusedResources.Columns.Clear();
             dgvUsedResources.DataSource = ds.Tables["Used resources"];
 
             DataGridViewComboBoxColumn dcAction = new DataGridViewComboBoxColumn();
