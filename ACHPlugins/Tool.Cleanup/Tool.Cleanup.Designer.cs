@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tool_Cleanup));
             this.tabcScanResult = new System.Windows.Forms.TabControl();
             this.tabpUnusedResources = new System.Windows.Forms.TabPage();
@@ -43,6 +43,7 @@
             this.tsbBeginScanProject = new System.Windows.Forms.ToolStripButton();
             this.tsbCheck = new System.Windows.Forms.ToolStripButton();
             this.tsbUncheck = new System.Windows.Forms.ToolStripButton();
+            this.tsbFilter = new System.Windows.Forms.ToolStripButton();
             this.tabcScanResult.SuspendLayout();
             this.tabpUnusedResources.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnusedResources)).BeginInit();
@@ -80,8 +81,8 @@
             // 
             // dgvUnusedResources
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvUnusedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUnusedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvUnusedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnusedResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUnusedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -106,8 +107,8 @@
             // 
             // dgvUsedResources
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvUsedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUsedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvUsedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsedResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUsedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -129,8 +130,8 @@
             // 
             // dgvAllResources
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvAllResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvAllResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvAllResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAllResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAllResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -145,7 +146,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbBeginScanProject,
             this.tsbCheck,
-            this.tsbUncheck});
+            this.tsbUncheck,
+            this.tsbFilter});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(546, 25);
@@ -184,6 +186,17 @@
             this.tsbUncheck.Text = "toolStripButton2";
             this.tsbUncheck.Click += new System.EventHandler(this.tsbUncheck_Click);
             // 
+            // tsbFilter
+            // 
+            this.tsbFilter.CheckOnClick = true;
+            this.tsbFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbFilter.Image = ((System.Drawing.Image)(resources.GetObject("tsbFilter.Image")));
+            this.tsbFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbFilter.Name = "tsbFilter";
+            this.tsbFilter.Size = new System.Drawing.Size(23, 22);
+            this.tsbFilter.Text = "toolStripButton1";
+            this.tsbFilter.Click += new System.EventHandler(this.tsbFilter_Click);
+            // 
             // Tool_Cleanup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,5 +232,6 @@
         private System.Windows.Forms.ToolStripButton tsbBeginScanProject;
         private System.Windows.Forms.ToolStripButton tsbCheck;
         private System.Windows.Forms.ToolStripButton tsbUncheck;
+        private System.Windows.Forms.ToolStripButton tsbFilter;
     }
 }
