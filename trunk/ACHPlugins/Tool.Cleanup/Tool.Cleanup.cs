@@ -234,10 +234,13 @@ namespace ACHPlugin
             DataColumn dcURRefId = new DataColumn("RefId", typeof(string));
             DataColumn dcURRowLine = new DataColumn("RowLine", typeof(string));
             DataColumn dcURClassFile = new DataColumn("ClassFile", typeof(string));
+            DataColumn dcURType = new DataColumn("Type", typeof(string));
 
             dtUsedRes.Columns.Add(dcURRefId);
             dtUsedRes.Columns.Add(dcURRowLine);
             dtUsedRes.Columns.Add(dcURClassFile);
+            dtUsedRes.Columns.Add(dcURType);
+
             ds.Tables.Add(dtUsedRes);
 
             List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
@@ -274,6 +277,9 @@ namespace ACHPlugin
 
             dgvUsedResources.DataSource = null;
             dgvUsedResources.DataSource = ds.Tables["Used resources"];
+
+            DataGridViewComboBoxColumn dcAction = new DataGridViewComboBoxColumn();
+            dgvUsedResources.Columns.Add(dcAction);
 
 
 

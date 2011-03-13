@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Tool_Cleanup));
             this.tabcScanResult = new System.Windows.Forms.TabControl();
             this.tabpUnusedResources = new System.Windows.Forms.TabPage();
@@ -80,8 +80,8 @@
             // 
             // dgvUnusedResources
             // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvUnusedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUnusedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvUnusedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnusedResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUnusedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -106,8 +106,8 @@
             // 
             // dgvUsedResources
             // 
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvUsedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvUsedResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvUsedResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsedResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUsedResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
@@ -122,22 +122,22 @@
             this.tabpAllResources.Controls.Add(this.dgvAllResources);
             this.tabpAllResources.Location = new System.Drawing.Point(4, 22);
             this.tabpAllResources.Name = "tabpAllResources";
-            this.tabpAllResources.Size = new System.Drawing.Size(533, 422);
+            this.tabpAllResources.Size = new System.Drawing.Size(533, 435);
             this.tabpAllResources.TabIndex = 2;
             this.tabpAllResources.Text = "All Resources";
             this.tabpAllResources.UseVisualStyleBackColor = true;
             // 
             // dgvAllResources
             // 
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgvAllResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgvAllResources.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvAllResources.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAllResources.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAllResources.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvAllResources.Location = new System.Drawing.Point(0, 0);
             this.dgvAllResources.Name = "dgvAllResources";
             this.dgvAllResources.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAllResources.Size = new System.Drawing.Size(533, 422);
+            this.dgvAllResources.Size = new System.Drawing.Size(533, 435);
             this.dgvAllResources.TabIndex = 0;
             // 
             // toolStrip1
