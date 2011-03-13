@@ -279,6 +279,31 @@ namespace ACHPlugin
             public string AudioLength; // 00:00:10.10
             public string AudioType; // WAV, MP3
 
+            public override string ToString()
+            {
+
+                switch (resourceObjectFileType)
+                {
+                    case ResourceObjectFileTypes.Xml: return "XML";
+                    case ResourceObjectFileTypes.Other: return "Other";
+                    case ResourceObjectFileTypes.ImagePNG: if (ImageUsesAlphaChannel)
+                            return "PNG " + ImageSize + " Using Alpha Channel";
+                                else
+                            return "PNG " + ImageSize + " Not using Alpha Channel";
+                    case ResourceObjectFileTypes.ImageJPG:
+                        return "JPG " + ImageSize;
+                    case ResourceObjectFileTypes.AudioOGG:
+                    case ResourceObjectFileTypes.AudioMP3:
+                    case ResourceObjectFileTypes.AudioWAV:
+                        return AudioType + "/" + AudioBit + "/" + AudioSampleRate + "/" + AudioChannels + "/" + AudioLength;
+
+                }
+
+
+
+                return "Other";
+            }
+
             private static ResourceObjectFileTypes ExtensionToFileType(string FilePath)
             {
                 string ext = System.IO.Path.GetExtension(FilePath);
@@ -337,14 +362,16 @@ namespace ACHPlugin
 
         }
 
-        private ResourceObject FindResourceObjectByName(ResourceObject[] ros, string Name)
+        private ResourceObject[] FindResourceObjectByName(ResourceObject[] ros, string Name)
         {
             var lros = from l in ros
                        where l.resourceObjectName.Equals(Name, StringComparison.CurrentCultureIgnoreCase)
                        select l;
 
             if (lros.Count() > 0)
-                return lros.First();
+            {
+                return new List<ResourceObject>(lros).ToArray();
+            }
             else
                 return null;
 
@@ -383,20 +410,46 @@ namespace ACHPlugin
             DataColumn dcARName = new DataColumn("Name", typeof(string));
             DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
             DataColumn dcARType = new DataColumn("Type", typeof(string));
+            DataColumn dcARSize = new DataColumn("Size", typeof(string));
+            DataColumn dcARResPath = new DataColumn("Path", typeof(string));
 
             dtAllRes.Columns.Add(dcARCategory);
             dtAllRes.Columns.Add(dcARName);
             dtAllRes.Columns.Add(dcARRefId);
             dtAllRes.Columns.Add(dcARType);
+            dtAllRes.Columns.Add(dcARSize);
+            dtAllRes.Columns.Add(dcARResPath);
+
+
             ds.Tables.Add(dtAllRes);
 
             foreach (var r in resPRF)
             {
-                DataRow dr = dtAllRes.NewRow();
-                dr["Category"] = r.Category;
-                dr["Name"] = r.RefName;
-                dr["RefId"] = r.RefId;
-                dtAllRes.Rows.Add(dr);
+                ResourceObject[] roFounds = FindResourceObjectByName(ros, r.RefName);
+
+                if (roFounds != null)
+                {
+                    foreach (var roFound in roFounds)
+                    {
+                        DataRow dr = dtAllRes.NewRow();
+                        dr["Category"] = r.Category;
+                        dr["Name"] = r.RefName;
+                        dr["RefId"] = r.RefId;
+                        dr["Type"] = roFound.ToString();
+                        dr["Size"] = string.Format("{0} bytes", roFound.resourceObjectSize.ToString("00000000"));
+                        dr["Path"] = roFound.resourceObjectPath;
+                        dtAllRes.Rows.Add(dr);
+                    }
+
+                }
+                else
+                {
+                    DataRow dr = dtAllRes.NewRow();
+                    dr["Category"] = r.Category;
+                    dr["Name"] = r.RefName;
+                    dr["RefId"] = r.RefId;
+                    dtAllRes.Rows.Add(dr);
+                }
             }
 
             dgvAllResources.DataSource = null;
