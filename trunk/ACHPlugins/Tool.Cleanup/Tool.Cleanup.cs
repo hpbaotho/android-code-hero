@@ -594,5 +594,11 @@ namespace ACHPlugin
                 dt.Rows[ind][3] = false;
             }
         }
+
+        private void tsbFilter_Click(object sender, EventArgs e)
+        {
+            Filter filt = new Filter();
+            filt.ShowDialog();
+        }
     }
 }
