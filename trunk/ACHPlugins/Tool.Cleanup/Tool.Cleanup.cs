@@ -182,6 +182,127 @@ namespace ACHPlugin
 
         }
 
+        public static string ffmpegPath = @"C:\Users\Mikael\Documents\Visual Studio 2010\Projects\AndroidCodeHero\ffmpeg.exe";
+
+        private class ResourceObject
+        {
+
+            // ffmpeg -i audio.wav -acodec vorbis -aq 60 audio.ogg
+            //Duration: 00:00:00.43, start: 0.000000, bitrate: 156 kb/s
+
+            private static void AnalyzeAudioFile(string FilePath, ResourceObject ro)
+            {
+                try
+                {
+                    System.Diagnostics.Process p = new System.Diagnostics.Process();
+                    p.StartInfo.FileName = ffmpegPath;
+                    p.StartInfo.Arguments = "-i \"" + FilePath + "\"";
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardError = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+                    while (!p.StandardError.EndOfStream)
+                    {
+                        string sLine = p.StandardError.ReadLine().Trim();
+                        if (sLine.StartsWith("Duration: "))
+                        {
+                            ro.AudioLength = sLine.Substring("Duration: ".Length, "00:00:00.00".Length);
+                        }
+                        if (sLine.StartsWith("Stream #0.0:"))
+                        {
+                            string[] sParams = sLine.Substring("Stream #0.0: Audio: ".Length).Split(',');
+                            ro.AudioBit = sParams[3].Trim();
+                            ro.AudioChannels = sParams[2].Trim();
+                            ro.AudioSampleRate = sParams[1].Trim();
+                            ro.AudioBitRate = sParams[4].Trim();
+                            ro.AudioType = sParams[0].Trim();
+                        }
+
+                    }
+
+                    p.WaitForExit();
+                }
+                catch (System.Exception ex)
+                {
+
+                }
+
+            }
+
+            public enum ResourceObjectFileTypes { Xml, AudioWAV, AudioOGG, AudioMP3, ImagePNG, ImageJPG, Other };
+
+            public ResourceObjectFileTypes resourceObjectFileType;
+
+            public string resourceObjectPath; // res/drawable-hdpi/logo.png
+            public long resourceObjectSize; // 2000 bytes
+            public string resourceObjectName;
+
+            public string ImageSize; // W200:H500
+            public string ImageType; // JPG, PNG
+            public bool ImageUsesAlphaChannel; 
+
+            public string AudioBit; // 8-bit, 16 bit
+            public string AudioBitRate; // 160 kb/s
+            public string AudioSampleRate; // 44Khz
+            public string AudioChannels; // Stereo, Mono
+            public string AudioLength; // 00:00:10.10
+            public string AudioType; // WAV, MP3
+
+            private static ResourceObjectFileTypes ExtensionToFileType(string FilePath)
+            {
+                string ext = System.IO.Path.GetExtension(FilePath);
+
+                switch (ext.ToLower())
+                {
+                    case ".png": return ResourceObjectFileTypes.ImagePNG;
+                    case ".bmp": return ResourceObjectFileTypes.ImageJPG;
+                    case ".wav": return ResourceObjectFileTypes.AudioWAV;
+                    case ".mp3": return ResourceObjectFileTypes.AudioMP3;
+                    case ".ogg": return ResourceObjectFileTypes.AudioOGG;
+                    case ".xml": return ResourceObjectFileTypes.Xml;
+                    default: return ResourceObjectFileTypes.Other;
+                }
+
+
+            }
+
+            static public ResourceObject[] MapResources(string Path)
+            {
+
+                List<ResourceObject> listRO = new List<ResourceObject>();
+                string[] files = System.IO.Directory.GetFiles(Path, "*.*", SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    if (!file.Contains(".svn"))
+                    {
+
+                        ResourceObject ro = new ResourceObject();
+                        ro.resourceObjectFileType = ExtensionToFileType(file);
+                        ro.resourceObjectPath = file.Substring(Path.Length+1);
+                        ro.resourceObjectSize = new System.IO.FileInfo(file).Length;
+                        ro.resourceObjectName = System.IO.Path.GetFileNameWithoutExtension(file);
+                        if (ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.AudioWAV) || ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.AudioOGG) || ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.AudioMP3))
+                        {
+                            AnalyzeAudioFile(file, ro);
+                        }
+
+                        if (ro.resourceObjectFileType.Equals(ResourceObject.ResourceObjectFileTypes.ImagePNG))
+                        {
+
+                        }
+
+                        listRO.Add(ro);
+                    }
+
+                }
+
+                return listRO.ToArray();
+
+            }
+            
+
+        }
+
         private void BeginScanProject()
         {
 
@@ -200,6 +321,8 @@ namespace ACHPlugin
             string sActiveAndroidProjectFolder = (string)oResultAAPF;
             List<CodeAnalyzer.CodeResourceRef> listCR = ScanXMLFiles(sActiveAndroidProjectFolder);
 
+            ResourceObject.MapResources(sActiveAndroidProjectFolder + "\\res");
+
             
 
             // Parse R. file
@@ -211,9 +334,12 @@ namespace ACHPlugin
             DataColumn dcARCategory = new DataColumn("Category", typeof(string));
             DataColumn dcARName = new DataColumn("Name", typeof(string));
             DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
+            DataColumn dcARType = new DataColumn("Type", typeof(string));
+
             dtAllRes.Columns.Add(dcARCategory);
             dtAllRes.Columns.Add(dcARName);
             dtAllRes.Columns.Add(dcARRefId);
+            dtAllRes.Columns.Add(dcARType);
             ds.Tables.Add(dtAllRes);
 
             foreach (var r in resPRF)
