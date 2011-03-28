@@ -377,6 +377,21 @@ namespace ACHPlugin
 
         }
 
+        private bool FindNameInResourceRef(CodeAnalyzer.ResourceRef[] rr, string Name)
+        {
+            var lr = from l in rr
+                       where l.RefName.Equals(Name,StringComparison.CurrentCultureIgnoreCase)
+                       select l;
+
+            if (lr.Count() > 0)
+            {
+                return true;
+            }
+            else
+                return false;
+
+        }
+
         private void BeginScanProject()
         {
 
@@ -386,28 +401,57 @@ namespace ACHPlugin
             while (cntrlParent.Parent != null)
                 cntrlParent = cntrlParent.Parent;
 
-            MethodInfo miAPSC = cntrlParent.GetType().UnderlyingSystemType.GetMethod("AnalyzeProjectSourceCode");
-            object oResultAPSC = miAPSC.Invoke(cntrlParent, null);
-            string sAnalyzeProjectSourceCode = (string)oResultAPSC;
+            //MethodInfo miAPSC = cntrlParent.GetType().UnderlyingSystemType.GetMethod("AnalyzeProjectSourceCode");
+            //object oResultAPSC = miAPSC.Invoke(cntrlParent, null);
+            //string sAnalyzeProjectSourceCode = (string)oResultAPSC;
 
             PropertyInfo piAAPF = cntrlParent.GetType().UnderlyingSystemType.GetProperty("ActiveAndroidProjectFolder");
             object oResultAAPF = piAAPF.GetValue(cntrlParent, null);
             string sActiveAndroidProjectFolder = (string)oResultAAPF;
+
+            // Map all resource references found in XML files
             List<CodeAnalyzer.CodeResourceRef> listCR = ScanXMLFiles(sActiveAndroidProjectFolder);
 
+            // Map all files in "Res" folder
             ResourceObject[] ros = ResourceObject.MapResources(sActiveAndroidProjectFolder + "\\res");
 
+            List<string> listCategories = new List<string>();
+            CodeAnalyzer.ResourceRef[] rrs = null;
 
-            
 
-            // Parse R. file
+            string[] sRFile = Directory.GetFiles(sActiveAndroidProjectFolder, "*.java",SearchOption.AllDirectories);
+            foreach (var sFile in sRFile)
+            {
+                if (System.IO.Path.GetFileName(sFile).Equals("R.java", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    rrs = CodeAnalyzer.AnalyzeRFile(sFile);
+                    var uniquecatgroups = from r in rrs
+                                          group r by r.Category;
 
-            var resPRF = CodeAnalyzer.ParseResourceFile(sAnalyzeProjectSourceCode + "\\R.jsp");
+                    foreach (var u in uniquecatgroups)
+                    {
+                        listCategories.Add(u.Key);
+                    }
+
+                }
+            }
+
+            foreach (var sFile in sRFile)
+            {
+                if (!System.IO.Path.GetFileName(sFile).Equals("R.java", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    var xxxxxx = CodeAnalyzer.AnalyzeCodeFile(listCategories.ToArray(), sFile);
+
+
+                }
+            }
+
 
             DataSet ds = new DataSet();
             DataTable dtAllRes = new DataTable("All resources");
             DataColumn dcARCategory = new DataColumn("Category", typeof(string));
             DataColumn dcARName = new DataColumn("Name", typeof(string));
+            DataColumn dcARStatus = new DataColumn("Status", typeof(string));
             DataColumn dcARRefId = new DataColumn("RefId", typeof(string));
             DataColumn dcARType = new DataColumn("Type", typeof(string));
             DataColumn dcARSize = new DataColumn("Size", typeof(string));
@@ -415,150 +459,100 @@ namespace ACHPlugin
 
             dtAllRes.Columns.Add(dcARCategory);
             dtAllRes.Columns.Add(dcARName);
+            dtAllRes.Columns.Add(dcARStatus);
             dtAllRes.Columns.Add(dcARRefId);
             dtAllRes.Columns.Add(dcARType);
             dtAllRes.Columns.Add(dcARSize);
             dtAllRes.Columns.Add(dcARResPath);
-
-
             ds.Tables.Add(dtAllRes);
 
-            foreach (var r in resPRF)
-            {
-                ResourceObject[] roFounds = FindResourceObjectByName(ros, r.RefName);
+            //List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
+            //string[] sJSPFiles = Directory.GetFiles(sAnalyzeProjectSourceCode, "*.jsp");
+            //foreach (var sFile in sJSPFiles)
+            //{
+            //    if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
+            //    {
+            //        CodeAnalyzer.AnalyzeRFile(sFile);
+            //        //var resCRF = CodeAnalyzer.AnalyzeRFile(sFile);
+            //        //                    var resCRF = CodeAnalyzer.ParseJavaFile(resPRF, sFile);
+            //        //listTotalCRR.AddRange(resCRF);
+            //    }
 
-                if (roFounds != null)
-                {
-                    foreach (var roFound in roFounds)
-                    {
-                        DataRow dr = dtAllRes.NewRow();
-                        dr["Category"] = r.Category;
-                        dr["Name"] = r.RefName;
-                        dr["RefId"] = r.RefId;
-                        dr["Type"] = roFound.ToString();
-                        dr["Size"] = string.Format("{0} bytes", roFound.resourceObjectSize.ToString("00000000"));
-                        dr["Path"] = roFound.resourceObjectPath;
-                        dtAllRes.Rows.Add(dr);
-                    }
+            //}
 
-                }
-                else
-                {
-                    DataRow dr = dtAllRes.NewRow();
-                    dr["Category"] = r.Category;
-                    dr["Name"] = r.RefName;
-                    dr["RefId"] = r.RefId;
-                    dtAllRes.Rows.Add(dr);
-                }
-            }
+            //listTotalCRR.AddRange(listCR);
 
-            dgvAllResources.DataSource = null;
-            dgvAllResources.DataSource = ds.Tables["All resources"];
+            //// Find Unused Resources
 
-            // Parse all other files
+            //var unusedRR = CodeAnalyzer.UnusedResources(resPRF, listTotalCRR.ToArray());
 
-            DataTable dtUsedRes = new DataTable("Used resources");
-            DataColumn dcURRefId = new DataColumn("RefId", typeof(string));
-            DataColumn dcURRowLine = new DataColumn("RowLine", typeof(string));
-            DataColumn dcURClassFile = new DataColumn("ClassFile", typeof(string));
-            DataColumn dcURType = new DataColumn("Type", typeof(string));
+            //foreach (var r in resPRF)
+            //{
+            //    ResourceObject[] roFounds = FindResourceObjectByName(ros, r.RefName);
 
-            dtUsedRes.Columns.Add(dcURRefId);
-            dtUsedRes.Columns.Add(dcURRowLine);
-            dtUsedRes.Columns.Add(dcURClassFile);
-            dtUsedRes.Columns.Add(dcURType);
+            //    if (roFounds != null)
+            //    {
+            //        foreach (var roFound in roFounds)
+            //        {
+            //            DataRow dr = dtAllRes.NewRow();
+            //            dr["Category"] = r.Category;
+            //            dr["Name"] = r.RefName;
+            //            if(FindNameInResourceRef(unusedRR,r.RefName))
+            //                dr["Status"] = "Unused";
+            //            else
+            //                dr["Status"] = "Used";
+            //            dr["RefId"] = r.RefId;
+            //            dr["Type"] = roFound.ToString();
+            //            dr["Size"] = string.Format("{0} bytes", roFound.resourceObjectSize.ToString("00000000"));
+            //            dr["Path"] = roFound.resourceObjectPath;
+            //            dtAllRes.Rows.Add(dr);
+            //        }
 
-            ds.Tables.Add(dtUsedRes);
+            //    }
+            //    else
+            //    {
+            //        DataRow dr = dtAllRes.NewRow();
+            //        dr["Category"] = r.Category;
+            //        dr["Name"] = r.RefName;
+            //        if (FindNameInResourceRef(unusedRR, r.RefName))
+            //            dr["Status"] = "Unused";
+            //        else
+            //            dr["Status"] = "Used";
+            //        dr["RefId"] = r.RefId;
+            //        dtAllRes.Rows.Add(dr);
+            //    }
+            //}
 
-            List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
-
-            string[] sJSPFiles = Directory.GetFiles(sAnalyzeProjectSourceCode, "*.jsp");
-            foreach (var sFile in sJSPFiles)
-            {
-                if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    var resCRF = CodeAnalyzer.ParseJavaFile(resPRF, sFile);
-                    listTotalCRR.AddRange(resCRF);
-                    foreach (var rcrf in resCRF)
-                    {
-                        DataRow dr = dtUsedRes.NewRow();
-                        dr["RefId"] = rcrf.Ref.RefId;
-                        dr["RowLine"] = rcrf.CodeLineNumber;
-                        dr["ClassFile"] = rcrf.ClassFile;
-                        dtUsedRes.Rows.Add(dr);
-                    }
-
-                }
-
-
-                foreach (var lcr in listCR)
-                {
-                    DataRow dr = dtUsedRes.NewRow();
-                    dr["RefId"] = lcr.Ref.RefId;
-                    dr["RowLine"] = lcr.CodeLineNumber;
-                    dr["ClassFile"] = lcr.ClassFile;
-                    dtUsedRes.Rows.Add(dr);
-                }
-
-            }
-
-            dgvUsedResources.DataSource = null;
-            dgvUnusedResources.Columns.Clear();
-            dgvUsedResources.DataSource = ds.Tables["Used resources"];
-
-            DataGridViewComboBoxColumn dcAction = new DataGridViewComboBoxColumn();
-            dgvUsedResources.Columns.Add(dcAction);
+            //dgvAllResources.DataSource = null;
+            //dgvAllResources.DataSource = ds.Tables["All resources"];
 
 
 
-            // Find Unused Resources
 
-            DataTable dtUnusedRes = new DataTable("Unused resources");
-            DataColumn dcUURCategory = new DataColumn("Category", typeof(string));
-            DataColumn dcUURName = new DataColumn("Name", typeof(string));
-            DataColumn dcUURRefId = new DataColumn("RefId", typeof(string));
-            DataColumn dcIgnore = new DataColumn("Ignore", typeof(Boolean));
-
-            dtUnusedRes.Columns.Add(dcUURCategory);
-            dtUnusedRes.Columns.Add(dcUURName);
-            dtUnusedRes.Columns.Add(dcUURRefId);
-            dtUnusedRes.Columns.Add(dcIgnore);
-
-            ds.Tables.Add(dtUnusedRes);
-
-            var unusedRR = CodeAnalyzer.UnusedResources(resPRF, listTotalCRR.ToArray());
-
-            foreach (var urr in unusedRR)
-            {
-                DataRow dr = dtUnusedRes.NewRow();
-                dr["Category"] = urr.Category;
-                dr["Name"] = urr.RefName;
-                dr["RefId"] = urr.RefId;
-                dtUnusedRes.Rows.Add(dr);
+            ////DataGridViewComboBoxColumn dcAction = new DataGridViewComboBoxColumn();
+            ////dgvUsedResources.Columns.Add(dcAction);
 
 
-            }
 
-            dgvUnusedResources.DataSource = null;
-            dgvUnusedResources.DataSource = ds.Tables["Unused resources"];
+ 
 
 
         }
 
-        private void dgvUnusedResources_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
+        //private void dgvUnusedResources_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
 
 
-            if (e.ColumnIndex == 3)
-            {
-                DataTable dt = (DataTable)dgvUnusedResources.DataSource;
-                if (dt.Rows[e.RowIndex][3] == DBNull.Value)
-                    dt.Rows[e.RowIndex][3] = true;
-                else
-                    dt.Rows[e.RowIndex][3] = !((bool)dt.Rows[e.RowIndex][3]);
-            }
+        //    if (e.ColumnIndex == 3)
+        //    {
+        //        DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+        //        if (dt.Rows[e.RowIndex][3] == DBNull.Value)
+        //            dt.Rows[e.RowIndex][3] = true;
+        //        else
+        //            dt.Rows[e.RowIndex][3] = !((bool)dt.Rows[e.RowIndex][3]);
+        //    }
 
-        }
+        //}
 
         private void tsbBeginScanProject_Click(object sender, EventArgs e)
         {
@@ -573,26 +567,26 @@ namespace ACHPlugin
 
         private void tsbCheck_Click(object sender, EventArgs e)
         {
-            DataTable dt = (DataTable)dgvUnusedResources.DataSource;
-            foreach (var r in dgvUnusedResources.SelectedRows)
-            {
-                DataGridViewRow dgvr = (DataGridViewRow)r;
-                int ind = dgvr.Index;
-                dt.Rows[ind][3] = true;
-            }
+            //DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+            //foreach (var r in dgvUnusedResources.SelectedRows)
+            //{
+            //    DataGridViewRow dgvr = (DataGridViewRow)r;
+            //    int ind = dgvr.Index;
+            //    dt.Rows[ind][3] = true;
+            //}
 
 
         }
 
         private void tsbUncheck_Click(object sender, EventArgs e)
         {
-            DataTable dt = (DataTable)dgvUnusedResources.DataSource;
-            foreach (var r in dgvUnusedResources.SelectedRows)
-            {
-                DataGridViewRow dgvr = (DataGridViewRow)r;
-                int ind = dgvr.Index;
-                dt.Rows[ind][3] = false;
-            }
+            //DataTable dt = (DataTable)dgvUnusedResources.DataSource;
+            //foreach (var r in dgvUnusedResources.SelectedRows)
+            //{
+            //    DataGridViewRow dgvr = (DataGridViewRow)r;
+            //    int ind = dgvr.Index;
+            //    dt.Rows[ind][3] = false;
+            //}
         }
 
         private void tsbFilter_Click(object sender, EventArgs e)
