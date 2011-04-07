@@ -418,7 +418,6 @@ namespace ACHPlugin
             List<string> listCategories = new List<string>();
             CodeAnalyzer.ResourceRef[] rrs = null;
 
-
             string[] sRFile = Directory.GetFiles(sActiveAndroidProjectFolder, "*.java",SearchOption.AllDirectories);
             foreach (var sFile in sRFile)
             {
@@ -436,16 +435,17 @@ namespace ACHPlugin
                 }
             }
 
+            List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
             foreach (var sFile in sRFile)
             {
                 if (!System.IO.Path.GetFileName(sFile).Equals("R.java", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    var xxxxxx = CodeAnalyzer.AnalyzeCodeFile(listCategories.ToArray(), sFile);
-
-
+                    var codeResourceRefs = CodeAnalyzer.AnalyzeCodeFile(listCategories.ToArray(), sFile);
+                    listTotalCRR.AddRange(codeResourceRefs);
                 }
             }
 
+            var unusedRR = CodeAnalyzer.UnusedResources(rrs, listTotalCRR.ToArray());
 
             DataSet ds = new DataSet();
             DataTable dtAllRes = new DataTable("All resources");
@@ -466,65 +466,45 @@ namespace ACHPlugin
             dtAllRes.Columns.Add(dcARResPath);
             ds.Tables.Add(dtAllRes);
 
-            //List<CodeAnalyzer.CodeResourceRef> listTotalCRR = new List<CodeAnalyzer.CodeResourceRef>();
-            //string[] sJSPFiles = Directory.GetFiles(sAnalyzeProjectSourceCode, "*.jsp");
-            //foreach (var sFile in sJSPFiles)
-            //{
-            //    if (!sFile.EndsWith("R.jsp", StringComparison.CurrentCultureIgnoreCase))
-            //    {
-            //        CodeAnalyzer.AnalyzeRFile(sFile);
-            //        //var resCRF = CodeAnalyzer.AnalyzeRFile(sFile);
-            //        //                    var resCRF = CodeAnalyzer.ParseJavaFile(resPRF, sFile);
-            //        //listTotalCRR.AddRange(resCRF);
-            //    }
+            foreach (var r in rrs)
+            {
+                ResourceObject[] roFounds = FindResourceObjectByName(ros, r.RefName);
 
-            //}
+                if (roFounds != null)
+                {
+                    foreach (var roFound in roFounds)
+                    {
+                        DataRow dr = dtAllRes.NewRow();
+                        dr["Category"] = r.Category;
+                        dr["Name"] = r.RefName;
+                        if (FindNameInResourceRef(unusedRR, r.RefName))
+                            dr["Status"] = "Unused";
+                        else
+                            dr["Status"] = "Used";
+                        dr["RefId"] = r.RefId;
+                        dr["Type"] = roFound.ToString();
+                        dr["Size"] = string.Format("{0} bytes", roFound.resourceObjectSize.ToString("00000000"));
+                        dr["Path"] = roFound.resourceObjectPath;
+                        dtAllRes.Rows.Add(dr);
+                    }
 
-            //listTotalCRR.AddRange(listCR);
+                }
+                else
+                {
+                    DataRow dr = dtAllRes.NewRow();
+                    dr["Category"] = r.Category;
+                    dr["Name"] = r.RefName;
+                    if (FindNameInResourceRef(unusedRR, r.RefName))
+                        dr["Status"] = "Unused";
+                    else
+                        dr["Status"] = "Used";
+                    dr["RefId"] = r.RefId;
+                    dtAllRes.Rows.Add(dr);
+                }
+            }
 
-            //// Find Unused Resources
-
-            //var unusedRR = CodeAnalyzer.UnusedResources(resPRF, listTotalCRR.ToArray());
-
-            //foreach (var r in resPRF)
-            //{
-            //    ResourceObject[] roFounds = FindResourceObjectByName(ros, r.RefName);
-
-            //    if (roFounds != null)
-            //    {
-            //        foreach (var roFound in roFounds)
-            //        {
-            //            DataRow dr = dtAllRes.NewRow();
-            //            dr["Category"] = r.Category;
-            //            dr["Name"] = r.RefName;
-            //            if(FindNameInResourceRef(unusedRR,r.RefName))
-            //                dr["Status"] = "Unused";
-            //            else
-            //                dr["Status"] = "Used";
-            //            dr["RefId"] = r.RefId;
-            //            dr["Type"] = roFound.ToString();
-            //            dr["Size"] = string.Format("{0} bytes", roFound.resourceObjectSize.ToString("00000000"));
-            //            dr["Path"] = roFound.resourceObjectPath;
-            //            dtAllRes.Rows.Add(dr);
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        DataRow dr = dtAllRes.NewRow();
-            //        dr["Category"] = r.Category;
-            //        dr["Name"] = r.RefName;
-            //        if (FindNameInResourceRef(unusedRR, r.RefName))
-            //            dr["Status"] = "Unused";
-            //        else
-            //            dr["Status"] = "Used";
-            //        dr["RefId"] = r.RefId;
-            //        dtAllRes.Rows.Add(dr);
-            //    }
-            //}
-
-            //dgvAllResources.DataSource = null;
-            //dgvAllResources.DataSource = ds.Tables["All resources"];
+            dgvAllResources.DataSource = null;
+            dgvAllResources.DataSource = ds.Tables["All resources"];
 
 
 

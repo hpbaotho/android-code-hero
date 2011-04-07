@@ -53,10 +53,11 @@ namespace ACHPlugin
                             CodeResourceRef crr = new CodeResourceRef();
                             crr.ClassFile = Path.GetFileName(FilePath);
                             crr.CodeLineNumber = nLineNumber.ToString();
+                            crr.CodePosistion = start.ToString();
                             ResourceRef rr = new ResourceRef();
                             rr.Category = c;
                             rr.RefId = sRef;
-                            rr.RefName = sRef;
+                            rr.RefName = sRef.Split('.')[2];
                             crr.Ref = rr;
                             listCRR.Add(crr);
 
@@ -139,6 +140,7 @@ namespace ACHPlugin
             public string ClassFile;
             public ResourceRef Ref;
             public string CodeLineNumber;
+            public string CodePosistion;
         }
 
         public class ResourceRef
@@ -148,20 +150,20 @@ namespace ACHPlugin
             public string RefId;
         }
 
-        private static string ExtractRowNumber(string ValueText)
-        {
-            int nStart = ValueText.IndexOf("at line") + "at line".Length;
-            string sValue = ValueText.Substring(nStart);
-            return sValue;
-        }
+        //private static string ExtractRowNumber(string ValueText)
+        //{
+        //    int nStart = ValueText.IndexOf("at line") + "at line".Length;
+        //    string sValue = ValueText.Substring(nStart);
+        //    return sValue;
+        //}
 
-        private static string ExtractValue(string ValueText)
-        {
-            int nStart = ValueText.IndexOf('\'')+1;
-            int nLen =  ValueText.LastIndexOf('\'') - nStart;
-            string sValue = ValueText.Substring(nStart, nLen);
-            return sValue;
-        }
+        //private static string ExtractValue(string ValueText)
+        //{
+        //    int nStart = ValueText.IndexOf('\'')+1;
+        //    int nLen =  ValueText.LastIndexOf('\'') - nStart;
+        //    string sValue = ValueText.Substring(nStart, nLen);
+        //    return sValue;
+        //}
 
         private static ResourceRef FindRR(ResourceRef[] RRs, string RefId)
         {
@@ -200,38 +202,38 @@ namespace ACHPlugin
 
         }
 
-        public static CodeResourceRef[] ParseJavaFile(ResourceRef[] RR, string FilePath)
-        {
-            StreamReader sr = new StreamReader(FilePath);
-            List<CodeResourceRef> listRR = new List<CodeResourceRef>();
-            while (!sr.EndOfStream)
-            {
-                string sLine = sr.ReadLine();
-                if (sLine.StartsWith("QualifiedName"))
-                {
-                    string curDec = ExtractValue(sLine);
-                    ResourceRef rr = FindRR(RR, curDec);
-                    if (rr != null)
-                    {
+        //public static CodeResourceRef[] ParseJavaFile(ResourceRef[] RR, string FilePath)
+        //{
+        //    StreamReader sr = new StreamReader(FilePath);
+        //    List<CodeResourceRef> listRR = new List<CodeResourceRef>();
+        //    while (!sr.EndOfStream)
+        //    {
+        //        string sLine = sr.ReadLine();
+        //        if (sLine.StartsWith("QualifiedName"))
+        //        {
+        //            string curDec = ExtractValue(sLine);
+        //            ResourceRef rr = FindRR(RR, curDec);
+        //            if (rr != null)
+        //            {
 
-                        CodeResourceRef crr = new CodeResourceRef();
-                        crr.CodeLineNumber = ExtractRowNumber(sLine);
-                        crr.Ref = rr;
+        //                CodeResourceRef crr = new CodeResourceRef();
+        //                crr.CodeLineNumber = ExtractRowNumber(sLine);
+        //                crr.Ref = rr;
 
-                        if (crr.Ref.RefName.Contains("crowd"))
-                        {
-                            int ddd = 0;
-                        }
+        //                if (crr.Ref.RefName.Contains("crowd"))
+        //                {
+        //                    int ddd = 0;
+        //                }
 
-                        crr.ClassFile = Path.GetFileNameWithoutExtension(FilePath) + ".java";
-                        listRR.Add(crr);
-                    }
-                }
+        //                crr.ClassFile = Path.GetFileNameWithoutExtension(FilePath) + ".java";
+        //                listRR.Add(crr);
+        //            }
+        //        }
 
-            }
-            sr.Close();
-            return listRR.ToArray();
-        }
+        //    }
+        //    sr.Close();
+        //    return listRR.ToArray();
+        //}
 
     
     }
