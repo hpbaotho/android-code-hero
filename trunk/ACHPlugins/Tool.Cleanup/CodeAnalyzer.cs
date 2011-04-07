@@ -179,7 +179,7 @@ namespace ACHPlugin
         {
             foreach (var crr in CRRs)
             {
-                if (crr.Ref.Equals(RR))
+                if (crr.Ref.RefId.Equals(RR.RefId))
                     return true;
             }
             return false;
